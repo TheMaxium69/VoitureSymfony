@@ -15,10 +15,21 @@ class VoitureController extends AbstractController
      */
     public function index(VoitureRepository $repository): Response
     {
-        //$voitures = $repository->findAll();
+        $voitures = $repository->findAll();
 
         return $this->render('voiture/index.html.twig', [
-            'nosVoitures' => '$voitures',
+            'nosVoitures' => $voitures
+        ]);
+    }
+
+    /**
+     * @Route("/voiture/{id}", name="showVoiture")
+     */
+    public function show(Voiture $voiture, $id): Response
+    {
+
+        return $this->render('voiture/show.html.twig', [
+            'uneVoiture' => $voiture
         ]);
     }
 }

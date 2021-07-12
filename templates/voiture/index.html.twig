@@ -4,7 +4,18 @@
 
 {% block body %}
 
-
-
+<div class="row">
+    {%  for voiture in nosVoitures %}
+    <div class="card" style="width: 18rem;">
+        <img src="https://img-0.journaldunet.com/sl7HA_jco2gTwAF5ilGz0gRPX94=/1500x/smart/2a57638042c544b0868e3b554dd4acf4/ccmcms-jdn/24477174.jpg" class="card-img-top" alt="tesla">
+        <div class="card-body">
+            <h5 class="card-title">Model : {{ voiture.name | capitalize }}</h5>
+            <p class="card-text">marque : {{ voiture.brand | capitalize }}</p>
+            <p class="card-text">prix : {{ voiture.price }} € </p>
+            <a href="{{ path('showVoiture', {id : voiture.id }) }}" class="btn btn-primary">Voir plus</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 
 {% endblock %}

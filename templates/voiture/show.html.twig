@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ uneVoiture.name }}{% endblock %}
+
+{% block body %}
+
+            <div class="card" style="width: 18rem;">
+                <img src="https://img-0.journaldunet.com/sl7HA_jco2gTwAF5ilGz0gRPX94=/1500x/smart/2a57638042c544b0868e3b554dd4acf4/ccmcms-jdn/24477174.jpg" class="card-img-top" alt="tesla">
+                <div class="card-body">
+                    <h5 class="card-title">Model : {{ uneVoiture.name | capitalize }}</h5>
+                    <p class="card-text">marque : {{ uneVoiture.brand | capitalize }}</p>
+                    <p class="card-text">prix : {{ uneVoiture.price }} € </p>
+                </div>
+            </div>
+
+{% endblock %}
