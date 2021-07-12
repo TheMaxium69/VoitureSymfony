@@ -6,8 +6,9 @@ use App\DataFixtures\VoitureFixture;
 use App\Repository\VoitureRepository;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
-use http\Url;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -44,7 +45,7 @@ class VoitureController extends AbstractController
      */
     public function new(Request $laRequete, EntityManagerInterface $manager) : Response
     {
-        if ($laRequete->request->count() > 0) {
+        /*if ($laRequete->request->count() > 0) {
             $newVoiture = new Voiture();
             $newVoiture->setName($laRequete->request->get('name'));
             $newVoiture->setBrand($laRequete->request->get('brand'));
@@ -54,9 +55,24 @@ class VoitureController extends AbstractController
             $manager->flush();
 
             return $this->redirect('http://localhost:8000/voiture');
-        } else {
-            return $this->render('voiture/new.html.twig');
-        }
+        } else {*/
+
+        $newVoiture = new Voiture();
+
+        $form = $this->createFormBuilder($newVoiture)
+                ->add('name')
+                ->add('brand', TextareaType::class)
+                ->add('price')
+                ->add('Envoyer',SubmitType::class)
+                ->getForm();
+
+
+
+
+        return $this->render('voiture/new.html.twig', [
+            'formVoiture' => $form->createView()
+        ]);
+
     }
 }
 
