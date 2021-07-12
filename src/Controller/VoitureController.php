@@ -42,8 +42,9 @@ class VoitureController extends AbstractController
      */
     public function new(Request $laRequete) : Response
     {
+        $manager =$this->getDoctrine()->getManager();
 
-        if ($laRequete->request->get('name')) {
+        if ($laRequete->request->count() < 0) {
             $newVoiture = new Voiture();
             $newVoiture->setName($laRequete->request->get('name'));
             $newVoiture->setBrand($laRequete->request->get('brand'));
@@ -53,7 +54,6 @@ class VoitureController extends AbstractController
             dump($newVoiture);
 
             $manager->persist($newVoiture);
-
             $manager->flush();
         }
 
