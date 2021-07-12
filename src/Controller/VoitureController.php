@@ -22,8 +22,9 @@ class VoitureController extends AbstractController
         ]);
     }
 
+
     /**
-     * @Route("/voiture/{id}", name="showVoiture")
+     * @Route("/voiture/{id}", name="showVoiture", requirements={"id":"\d+"})
      */
     public function show(Voiture $voiture, $id): Response
     {
@@ -32,4 +33,15 @@ class VoitureController extends AbstractController
             'uneVoiture' => $voiture
         ]);
     }
+
+    /**
+     * @Route("/voiture/new/", name="newVoiture")
+     */
+    public function new() : Response
+    {
+        return $this->render('voiture/new.html.twig');
+    }
+
 }
+
+

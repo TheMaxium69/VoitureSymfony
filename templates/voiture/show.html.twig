@@ -10,6 +10,8 @@
                     <h5 class="card-title">Model : {{ uneVoiture.name | capitalize }}</h5>
                     <p class="card-text">marque : {{ uneVoiture.brand | capitalize }}</p>
                     <p class="card-text">prix : {{ uneVoiture.price }} € </p>
+                    <p class="card-text">date : {{ uneVoiture.createdAt | date('d M Y à H:i') }} </p>
+                    <a href="{{ path('indexVoiture') }}" class="btn btn-primary">Retour</a>
                 </div>
             </div>
 
