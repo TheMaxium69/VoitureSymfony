@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\DataFixtures\VoitureFixture;
 use App\Repository\VoitureRepository;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Voiture;
@@ -37,8 +40,24 @@ class VoitureController extends AbstractController
     /**
      * @Route("/voiture/new/", name="newVoiture")
      */
-    public function new() : Response
+    public function new(Request $laRequete) : Response
     {
+
+        if ($laRequete->request->get('name')) {
+            $newVoiture = new Voiture();
+            $newVoiture->setName($laRequete->request->get('name'));
+            $newVoiture->setBrand($laRequete->request->get('brand'));
+            $newVoiture->setPrice($laRequete->request->get('price'));
+            $newVoiture->setCreatedAt(new \DateTime());
+
+            dump($newVoiture);
+
+            $manager->persist($newVoiture);
+
+            $manager->flush();
+        }
+
+
         return $this->render('voiture/new.html.twig');
     }
 
