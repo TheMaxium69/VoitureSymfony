@@ -16,11 +16,6 @@ class VoitureType extends AbstractType
             ->add('name')
             ->add('brand')
             ->add('price')
-            ->add('enregistrez', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn-success'
-                ]
-            ])
         ;
     }
 

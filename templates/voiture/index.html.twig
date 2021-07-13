@@ -6,7 +6,6 @@
 
     <a href="{{ path('newVoiture')}}" class="btn btn-success">New</a>
 
-
     <div class="row">
         {%  for voiture in nosVoitures %}
             <div class="card" style="width: 18rem;">
@@ -17,6 +16,7 @@
                     <p class="card-text">prix : {{ voiture.price }} € </p>
                     <p class="card-text">date : {{ voiture.createdAt | date('d M Y à H:i') }} </p>
                     <a href="{{ path('showVoiture', {id : voiture.id }) }}" class="btn btn-primary">Voir plus</a>
+                    <a href="{{ path('editVoiture', {id : voiture.id }) }}" class="btn btn-info">Edit</a>
                 </div>
             </div>
         {% endfor %}

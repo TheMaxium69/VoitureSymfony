@@ -3,7 +3,6 @@
 {% block title %}{{ uneVoiture.name }}{% endblock %}
 
 {% block body %}
-
             <div class="card" style="width: 18rem;">
                 <img src="https://img-0.journaldunet.com/sl7HA_jco2gTwAF5ilGz0gRPX94=/1500x/smart/2a57638042c544b0868e3b554dd4acf4/ccmcms-jdn/24477174.jpg" class="card-img-top" alt="tesla">
                 <div class="card-body">
@@ -12,16 +11,7 @@
                     <p class="card-text">prix : {{ uneVoiture.price }} € </p>
                     <p class="card-text">date : {{ uneVoiture.createdAt | date('d M Y à H:i') }} </p>
                     <a href="{{ path('indexVoiture') }}" class="btn btn-primary">Retour</a>
+                    <a href="{{ path('editVoiture', {id : uneVoiture.id }) }}" class="btn btn-info">Edit</a>
                 </div>
             </div>
-
-
-    <h1>Edit la voiture</h1>
-
-    {{ form_start(formVoiture) }}
-
-    {{ form_row(formVoiture.name) }}
-
-    {{ form_end(formVoiture) }}
-
 {% endblock %}

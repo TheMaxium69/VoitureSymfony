@@ -6,26 +6,28 @@
 
 {% block body %}
 
-
-
-<h1>JE SUIS LE TWIG NEW</h1>
+    {% if isCreate %}
+        <h1>Form Create</h1>
+    {% else %}
+        <h1>Form Edit</h1>
+    {% endif %}
 
     {{ form_start(formVoiture) }}
 
-    {{ form_row(formVoiture.name) }}
+        {{ form_row(formVoiture.name) }}
+
+        {{ form_row(formVoiture.brand) }}
+
+        {{ form_row(formVoiture.price) }}
+
+        {% if isCreate %}
+            <input class="btn btn-success" type="submit" value="Créer">
+        {% else %}
+            <input class="btn btn-success" type="submit" value="Edit">
+        {% endif %}
 
     {{ form_end(formVoiture) }}
-<!--<form method="post">
-    <input type="text" name="name" placeholder="Name">
-    <input type="text" name="brand" placeholder="Marque">
-    <input type="text" name="price" placeholder="Price">
-    <input type="submit" value="envoyé">
 
-</form>-->
-<hr>
-    <a href="{{ path('indexVoiture') }}" class="btn btn-primary">Retour</a>
-
-
-
+    <hr><a href="{{ path('indexVoiture') }}" class="btn btn-primary">Retour</a>
 
 {% endblock %}
