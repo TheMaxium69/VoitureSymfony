@@ -33,16 +33,59 @@ class VoitureController extends AbstractController
      */
     public function show(Voiture $voiture, $id): Response
     {
-        return $this->render('voiture/show.html.twig', [
-            'uneVoiture' => $voiture
-        ]);
+
+            return $this->render('voiture/show.html.twig', [
+                'uneVoiture' => $voiture,
+            ]);
+
     }
     /**
      * @Route("/voiture/new/", name="newVoiture")
+     * @Route ("/voiture/edit/{id}", name="editVoiture")
      */
-    public function new(Request $laRequete, EntityManagerInterface $manager) : Response
+    public function new(Request $laRequete, EntityManagerInterface $manager,Voiture $voiture = null) : Response
     {
-        $newVoiture = new Voiture();
+
+        dump($voiture);
+
+        if($voiture) {
+
+            $formEdit = $this->createForm(VoitureType::class, $voiture);
+
+            $formEdit->handleRequest($laRequete);
+            if ($formEdit->isSubmitted()) {
+
+                $manager->persist($voiture);
+                $manager->flush();
+
+                return $this->redirect('http://localhost:8000/voiture');
+
+            }else{
+                return $this->render('voiture/new.html.twig', [
+                    'formVoiture' => $formEdit->createView()
+                ]);
+            }
+        }else{
+            $newVoiture = new Voiture();
+
+            $form = $this->createForm(VoitureType::class, $newVoiture);
+
+            $form->handleRequest($laRequete);
+            if ($form->isSubmitted())
+            {
+                $newVoiture->setCreatedAt(new \DateTime());
+
+                $manager->persist($newVoiture);
+                $manager->flush();
+
+                return $this->redirect('http://localhost:8000/voiture');
+
+            }else{
+                return $this->render('voiture/new.html.twig', [
+                    'formVoiture' => $form->createView()
+                ]);
+            }
+        }
         /**
          * Mon propre formulaire
          */
@@ -67,24 +110,7 @@ class VoitureController extends AbstractController
         /**
          * Formulaire avec createForm du formtype
          */
-         $form = $this->createForm(VoitureType::class, $newVoiture);
 
-           $form->handleRequest($laRequete);
-           if ($form->isSubmitted())
-           {
-               $newVoiture->setCreatedAt(new \DateTime());
-
-               $manager->persist($newVoiture);
-               $manager->flush();
-
-               return $this->redirect('http://localhost:8000/voiture');
-
-           }else{
-
-               return $this->render('voiture/new.html.twig', [
-                   'formVoiture' => $form->createView()
-               ]);
-           }
     }
 }
 
