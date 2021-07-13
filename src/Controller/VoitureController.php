@@ -65,6 +65,7 @@ class VoitureController extends AbstractController
                 ->add('price')
                 ->add('Envoyer',SubmitType::class)
                 ->getForm();
+           $form->handleRequest($laRequete);
 
 
 
