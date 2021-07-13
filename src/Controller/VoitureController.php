@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\DataFixtures\VoitureFixture;
+use App\Form\VoitureType;
 use App\Repository\VoitureRepository;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,53 +28,63 @@ class VoitureController extends AbstractController
             'nosVoitures' => $voitures
         ]);
     }
-
-
     /**
      * @Route("/voiture/{id}", name="showVoiture", requirements={"id":"\d+"})
      */
     public function show(Voiture $voiture, $id): Response
     {
-
         return $this->render('voiture/show.html.twig', [
             'uneVoiture' => $voiture
         ]);
     }
-
     /**
      * @Route("/voiture/new/", name="newVoiture")
      */
     public function new(Request $laRequete, EntityManagerInterface $manager) : Response
     {
-        /*if ($laRequete->request->count() > 0) {
-            $newVoiture = new Voiture();
+        $newVoiture = new Voiture();
+        /**
+         * Mon propre formulaire
+         */
+        /*if ($laRequete->request->count() > 0)
             $newVoiture->setName($laRequete->request->get('name'));
             $newVoiture->setBrand($laRequete->request->get('brand'));
             $newVoiture->setPrice($laRequete->request->get('price'));
             $newVoiture->setCreatedAt(new \DateTime());
             $manager->persist($newVoiture);
             $manager->flush();
-
             return $this->redirect('http://localhost:8000/voiture');
         } else {*/
-
-        $newVoiture = new Voiture();
-
-        $form = $this->createFormBuilder($newVoiture)
+        /**
+         * Formulaire avec createFormBuilder
+         */
+        /*$form = $this->createFormBuilder($newVoiture)
                 ->add('name')
                 ->add('brand', TextareaType::class)
                 ->add('price')
                 ->add('Envoyer',SubmitType::class)
-                ->getForm();
+                ->getForm();*/
+        /**
+         * Formulaire avec createForm du formtype
+         */
+         $form = $this->createForm(VoitureType::class, $newVoiture);
+
            $form->handleRequest($laRequete);
+           if ($form->isSubmitted())
+           {
+               $newVoiture->setCreatedAt(new \DateTime());
 
+               $manager->persist($newVoiture);
+               $manager->flush();
 
+               return $this->redirect('http://localhost:8000/voiture');
 
+           }else{
 
-        return $this->render('voiture/new.html.twig', [
-            'formVoiture' => $form->createView()
-        ]);
-
+               return $this->render('voiture/new.html.twig', [
+                   'formVoiture' => $form->createView()
+               ]);
+           }
     }
 }
 

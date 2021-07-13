@@ -2,20 +2,25 @@
 
 {% block title %}New voitures{% endblock %}
 
+{% form_theme formVoiture 'bootstrap_5_layout.html.twig' %}
+
 {% block body %}
 
 
-{{ form(formVoiture) }}
 
 <h1>JE SUIS LE TWIG NEW</h1>
-<form method="post">
+
+    {{ form_start(formVoiture) }}
+
+    {{ form_end(formVoiture) }}
+<!--<form method="post">
     <input type="text" name="name" placeholder="Name">
     <input type="text" name="brand" placeholder="Marque">
     <input type="text" name="price" placeholder="Price">
     <input type="submit" value="envoyé">
 
-</form>
-
+</form>-->
+<hr>
     <a href="{{ path('indexVoiture') }}" class="btn btn-primary">Retour</a>
 
 
